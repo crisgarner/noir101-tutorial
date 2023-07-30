@@ -10,5 +10,8 @@ out/
 # Docs
 docs/
 
+# System Files
+.DS_Store
+
 # Dotenv file
 .env

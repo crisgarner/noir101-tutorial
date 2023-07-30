@@ -8,3 +8,5 @@ SCREENSHOT
 Running `nargo test` with the proper test set will return true
 
 nargo prove command should return something
+
+Dynamic proof generation should be simpler
