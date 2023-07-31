@@ -9,4 +9,17 @@ Running `nargo test` with the proper test set will return true
 
 nargo prove command should return something
 
-Dynamic proof generation should be simpler
+Dynamic proof generation should be simpler, maybe create a foundry lib
+
+Sometimes when editing the tests, the functions gas price gets crazy
+
+425695
+425765
+
+425702
+8797746687696375461
+
+425702
+425784
+
+nargo check should clean data or there should be an option for clean
