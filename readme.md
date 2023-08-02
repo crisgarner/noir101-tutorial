@@ -23,3 +23,5 @@ Sometimes when editing the tests, the functions gas price gets crazy
 425784
 
 nargo check should clean data or there should be an option for clean
+
+better messages for errors when public inputs are wrong generated in the contracts ex. [FAIL. Reason: PUBLIC_INPUT_GE_P()]
