@@ -25,3 +25,8 @@ Sometimes when editing the tests, the functions gas price gets crazy
 nargo check should clean data or there should be an option for clean
 
 better messages for errors when public inputs are wrong generated in the contracts ex. [FAIL. Reason: PUBLIC_INPUT_GE_P()]
+
+Make sure proofs are on the right side 0x0000123 not 0x12300000
+
+
+convertion of strings to fields is buggy even keccak256(bytes(_signature) that is a full bytes32 gets rejected

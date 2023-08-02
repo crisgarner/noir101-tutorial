@@ -26,7 +26,7 @@ contract SecretCallerTest is Test {
         address contractAddress = address(myToken);
         uint256 value = 0;
         bytes memory data = abi.encode(100 ether);
-        bytes32 signature = bytes32("mint(uint256)");
+        string memory signature = "mint(uint256)";
         secretCaller.secretCall(
             getProof(),
             contractAddress,
@@ -34,7 +34,7 @@ contract SecretCallerTest is Test {
             signature,
             data
         );
-        assertEq(myToken.balanceOf(address(this)), 100 ether);
+        assertEq(myToken.balanceOf(address(secretCaller)), 100 ether);
     }
 
     function testSecretCall_ShouldRevert_WhenWrongProof() public {
@@ -42,7 +42,7 @@ contract SecretCallerTest is Test {
         address contractAddress = address(myToken);
         uint256 value = 0;
         bytes memory fakeData = abi.encode(1000 ether);
-        bytes32 signature = bytes32("mint(uint256)");
+        string memory signature = "mint(uint256)";
         secretCaller.secretCall(
             getProof(),
             contractAddress,

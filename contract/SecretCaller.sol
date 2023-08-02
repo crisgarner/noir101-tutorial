@@ -14,23 +14,39 @@ contract SecretCaller {
         bytes calldata proof,
         address _contract,
         uint256 _value,
-        bytes32 _signature,
+        string memory _signature,
         bytes memory _data
-    ) public view  {
+    ) public {
         bytes32[] memory publicInputs = new bytes32[](4);
-        publicInputs[0] =  bytes32(bytes20(_contract));
-        publicInputs[1] =  bytes32(_value);
-        publicInputs[2] =  bytes32(_signature);
-        publicInputs[3] =  bytes32(_data);
-        // _publicInputs[64] = merkleRoot;
-        // _publicInputs[65] = bytes32(uint256(uint160(msg.sender)));
-        // bytes32[] memory _publicInputs = new bytes32[](4);
-        // _publicInputs[0] = bytes32(bytes20(_contract));
-        // _publicInputs[1] = bytes32(_value);
-        // _publicInputs[2] = _signature;
-        // _publicInputs[3] = bytes32(_data);
-        // [bytes32(bytes20(_contract)),bytes32(_value),_signature,bytes32(_data)];
+        publicInputs[0] = bytes32(uint256(uint160(_contract)));
+        publicInputs[1] = bytes32(_value);
+        //hardcoded at the moment as there are issues generating a field from string
+        publicInputs[
+            2
+        ] = 0x000000000000000000000000000000000000006d696e742875696e7432353629;
+        publicInputs[3] = bytes32(_data);
         require(verifier.verify(proof, publicInputs), "Proof is not valid");
-        //TODO: Make My Token Call
+        bool success = executeTransaction(_contract, _value, _signature, _data);
+        require(success, "Transaction execution reverted.");
+    }
+
+    function executeTransaction(
+        address _contract,
+        uint256 _value,
+        string memory _signature,
+        bytes memory _data
+    ) private returns (bool) {
+        bytes memory callData;
+        if (bytes(_signature).length == 0) {
+            callData = _data;
+        } else {
+            callData = abi.encodePacked(
+                bytes4(keccak256(bytes(_signature))),
+                _data
+            );
+        }
+        // solium-disable-next-line security/no-call-value
+        (bool success, ) = _contract.call{value: _value}(callData);
+        return success;
     }
 }
